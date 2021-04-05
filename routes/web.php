@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresarioController;
+use App\Http\Controllers\CidadeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ use App\Http\Controllers\EmpresarioController;
 // });
 
 Route::resource('/', EmpresarioController::class);
+Route::get('/cidades/{id}', [CidadeController::class, 'cidades']);

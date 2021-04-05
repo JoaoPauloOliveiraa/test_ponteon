@@ -43,35 +43,10 @@
                             <label>Estado</label><br>
                             <div class="form-inline">
                                 <select id="state" name="state" class="form-control">
-                                        <option value="">Selecione</option>
-                                        <option value="AC">Acre</option>
-                                        <option value="AL">Alagoas</option>
-                                        <option value="AP">Amapá</option>
-                                        <option value="AM">Amazonas</option>
-                                        <option value="BA">Bahia</option>
-                                        <option value="CE">Ceará</option>
-                                        <option value="DF">Distrito Federal</option>
-                                        <option value="ES">Espirito Santo</option>
-                                        <option value="GO">Goiás</option>
-                                        <option value="MA">Maranhão</option>
-                                        <option value="MS">Mato Grosso do Sul</option>
-                                        <option value="MT">Mato Grosso</option>
-                                        <option value="MG">Minas Gerais</option>
-                                        <option value="PA">Pará</option>
-                                        <option value="PB">Paraíba</option>
-                                        <option value="PR">Paraná</option>
-                                        <option value="PE">Pernambuco</option>
-                                        <option value="PI">Piauí</option>
-                                        <option value="RJ">Rio de Janeiro</option>
-                                        <option value="RN">Rio Grande do Norte</option>
-                                        <option value="RS">Rio Grande do Sul</option>
-                                        <option value="RO">Rondônia</option>
-                                        <option value="RR">Roraima</option>
-                                        <option value="SC">Santa Catarina</option>
-                                        <option value="SP">São Paulo</option>
-                                        <option value="SE">Sergipe</option>
-                                        <option value="TO">Tocantins</option>
-                                    <p id="stateError" class="text-danger">Selecione um estado válido</p>
+                                    <option value="">Selecione</option>
+                                    @foreach ($estados as $estado)
+                                        <option value="{{$estado->id}}">{{$estado->nome}}</option> 
+                                    @endforeach
                                 </select>
                                 @if($errors->has('state'))
                                     <div class="invalid-feedback">
@@ -84,7 +59,7 @@
                             <label>Cidade</label><br>
                             <div class="form-inline">
                                 <select id="city" name="city" class="form-control custom-select" disabled>
-                                    <option value="disabled">Selecione...</option>
+                                    {{-- <option value="disabled">Selecione</option> --}}
                                     <p id="stateError" class="text-danger">Selecione um estado válido</p>
                                 </select>
                                 @if($errors->has('city'))
@@ -180,5 +155,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{asset('js/scripts.js')}}"></script>
+    
 </body>
 </html>

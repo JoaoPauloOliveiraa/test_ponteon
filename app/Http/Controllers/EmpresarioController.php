@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresario;
 use Illuminate\Http\Request;
-
+use App\Models\Estado;
+use App\Models\Cidade;
 class EmpresarioController extends Controller
 {
     /**
@@ -14,7 +15,11 @@ class EmpresarioController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $estados = Estado::get();
+        
+        return view('home', [
+            'estados' => $estados
+        ]);
     }
 
     /**
