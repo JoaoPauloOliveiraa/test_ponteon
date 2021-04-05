@@ -18,7 +18,7 @@ $(document).ready(function(){
           $('select[name=city]').empty();
           $.each(data,function(key,value){
 
-              $('select[name=city]').append('<option value="'+value.id+'">'+value.nome+'</option>');
+              $('select[name=city]').append('<option value="'+value.nome+'">'+value.nome+'</option>');
                    
           });
    

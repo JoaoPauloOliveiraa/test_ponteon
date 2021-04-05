@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="card-body col-8 offset-2">
-                    <form action="{{url('@create')}}" method="post">
+                    <form action="/" method="post">
                         @csrf
                         <div class="input mb-3">
                             <label>Nome</label><br>
@@ -72,8 +72,11 @@
                         <div class="input mb-3">
                             <label>Pai Empresarial</label><br>
                             <div class="form-inline">
-                                <select id="parent" name="parent" class="form-control select {{ $errors->has('parent') ? 'is-invalid' : '' }} " value="{{ old('parent') }}">
-                                    <option value="">Selecione...</option>
+                                <select id="parent" name="business_parent" class="form-control select {{ $errors->has('parent') ? 'is-invalid' : '' }} " value="{{ old('parent') }}">
+                                    <option value=" ">Selecione</option>
+                                    @foreach ($empresarios as $empresario)
+                                        <option value="{{$empresario->id}}">{{$empresario->name}}</option> 
+                                    @endforeach
                                     <p id="stateError" class="text-danger">Selecione um estado válido</p>
                                 </select>
                                 @if($errors->has('parent'))
@@ -83,8 +86,9 @@
                                 @endif
                             </div>
                         </div>
+                        <input type="submit" value="Cadastrar" class="btn btn-success">
                     </form>
-                    <a href="" class="btn btn-sm btn-success">Cadastrar</a>
+                    
                 </div>
             </div>
         </div>
@@ -135,18 +139,20 @@
                         </thead>
                         
                         <tbody>
-                            
+                            @foreach($empresarios as $empresario)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$empresario->name}}</td>
+                                    <td>{{$empresario->cell}}</td>
+                                    <td>{{$empresario->city}}</td>
+                                    <td>{{$empresario->created_at}}</td>
+                                    <td>{{$empresario->business_parent}}</td>
+                                    
                                         <td class="text-center">
                                         <a href="" class="btn btn-sm btn-primary">Ver Rede</a>
                                         <a href="" class="btn btn-sm btn-danger">Excluir</a>
                                     </td>
                                 </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -156,7 +162,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="{{asset('js/scripts.js')}}"></script>
+    <script type="text/javascript" src='/js/scripts.js'></script>
     
 </body>
 </html>

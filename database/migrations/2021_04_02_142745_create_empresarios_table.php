@@ -18,7 +18,7 @@ class CreateEmpresariosTable extends Migration
             $table->string('name', 100)->nullable(false);
             $table->string('cell')->unique('cell')->nullable(false);
             $table->string('city')->nullable(false);
-            $table->string('business_parent');
+            $table->string('business_parent')->nullable(true);
             $table->timestamps();
         });
     }

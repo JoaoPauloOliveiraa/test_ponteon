@@ -16,9 +16,10 @@ class EmpresarioController extends Controller
     public function index()
     {
         $estados = Estado::get();
-        
+        $empresarios = Empresario::get();
         return view('home', [
-            'estados' => $estados
+            'estados' => $estados,
+            'empresarios' => $empresarios,
         ]);
     }
 
@@ -29,7 +30,7 @@ class EmpresarioController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -40,8 +41,42 @@ class EmpresarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+       $request->validate([
+                    'name' => 'required|string|max:255',
+                    'cell' => 'required|digits:11|unique:empresarios',
+                    'state'=> 'required|max:27|numeric|gt:0',
+                    'city' => 'required|string|',
+                ],
+                [
+                    'name.required' => 'O campo nome é obrigatório!',
+                    'name.string' => 'Nome não pode conter numeros',
+                    'name.max' => 'O nome deve possuir no maximo 255 caracteres',
+                    'cell.required' => 'O celular é obrigatório',
+                    'cell.digits' => 'O celular deve possuir 11 números',
+                    'cell.unique' => 'Este número de celular já está cadastrado',
+                    'state.required' => 'Estado é obrigatório',
+                    'state.max' => 'Escolha um estado válido',
+                    'state.numeric' => 'Escolha um estado válido',
+                    'state.gt' => 'Escolha um estado válido!',
+                    'city.string' => 'Escolha uma cidade Válida',
+                ]);
+                
+            
+            $estado = Estado::where('id', $request->state)->get()->first();
+            $empresario = new Empresario;
+            $empresario -> name = $request->name;
+            $empresario -> cell = $request->cell;
+            $empresario -> city = $request->city . '/' . $estado->sigla;
+            $empresario -> business_parent = $request->business_parent;
+            // dd($empresario);
+            if($empresario -> Save()){
+            return back()->with('success', 'Usuario cadastrado com sucesso');
+            }
+            else{
+                return redirect (route('/'))->with('fail', 'Não foi possivel cadastrar usuário');
+            }
+        
+        }
 
     /**
      * Display the specified resource.
