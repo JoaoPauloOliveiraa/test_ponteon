@@ -59,8 +59,8 @@
                             <label>Cidade</label><br>
                             <div class="form-inline">
                                 <select id="city" name="city" class="form-control custom-select" disabled>
-                                    {{-- <option value="disabled">Selecione</option> --}}
-                                    <p id="stateError" class="text-danger">Selecione um estado válido</p>
+                                    
+                                    <p id="stateError" class="text-danger">Selecione uma cidade válida</p>
                                 </select>
                                 @if($errors->has('city'))
                                     <div class="invalid-feedback">
@@ -144,13 +144,17 @@
                                     <td>{{$empresario->name}}</td>
                                     <td>{{$empresario->cell}}</td>
                                     <td>{{$empresario->city}}</td>
-                                    <td>{{$empresario->created_at}}</td>
+                                    <td>{{$empresario->created_at->formatLocalized('%d/%m/%Y %H:%M')}}</td>
                                     <td>{{$empresario->business_parent}}</td>
                                     
                                         <td class="text-center">
-                                        <a href="" class="btn btn-sm btn-primary">Ver Rede</a>
-                                        <a href="" class="btn btn-sm btn-danger">Excluir</a>
-                                    </td>
+                                        <button type="button" value="{{$empresario->id}}" class="btn btn-sm btn-primary">Ver Rede</button>
+                                        <form action="{{route('excluir', ['id' => $empresario->id])}}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir o empresario {{$empresario->name}}?')" class="d-inline">
+                                            
+                                            @csrf
+                                            <button class="btn btn-sm btn-danger">Excluir</button>
+                                            </form>    
+                                        </td>
                                 </tr>
                             @endforeach
                         </tbody>

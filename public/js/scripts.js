@@ -15,16 +15,38 @@ $(document).ready(function(){
           dataType: 'json',
           success: function(data){
 
-          $('select[name=city]').empty();
-          $.each(data,function(key,value){
+            $('select[name=city]').empty();
+            $.each(data,function(key,value){
 
-              $('select[name=city]').append('<option value="'+value.nome+'">'+value.nome+'</option>');
-                   
-          });
+                $('select[name=city]').append('<option value="'+value.nome+'">'+value.nome+'</option>');
+                    
+            });
    
           }
-      })
+        })
       
       }
-    });
+    });          
+    $('.btn').click(function(){
+      var $empresario_id = $(this).val();
+
+      $.ajax({
+        
+        url: '/'+$empresario_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data){
+          $.each(data,function(key,value){
+
+              alert(value.name)
+                  
+          });
+ 
+        }
+      })
+
+    })
+
  });
+
+ 

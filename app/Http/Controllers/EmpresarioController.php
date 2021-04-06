@@ -16,7 +16,7 @@ class EmpresarioController extends Controller
     public function index()
     {
         $estados = Estado::get();
-        $empresarios = Empresario::get();
+        $empresarios = Empresario::orderBy('created_at', 'DESC')->get();
         return view('home', [
             'estados' => $estados,
             'empresarios' => $empresarios,
@@ -67,10 +67,18 @@ class EmpresarioController extends Controller
             $empresario -> name = $request->name;
             $empresario -> cell = $request->cell;
             $empresario -> city = $request->city . '/' . $estado->sigla;
-            $empresario -> business_parent = $request->business_parent;
+            
+            if($request->business_parent != null){
+                
+                $business_parent = Empresario::where( 'id', $request->business_parent)->get()->first();
+                if($business_parent)
+                $empresario -> business_parent = $business_parent->name;
+                else
+                return redirect (route('/'))->with('fail', 'Não foi possivel cadastrar usuário');
+            }
             // dd($empresario);
             if($empresario -> Save()){
-            return back()->with('success', 'Usuario cadastrado com sucesso');
+            return back()->with('success', 'Empresário cadastrado com sucesso');
             }
             else{
                 return redirect (route('/'))->with('fail', 'Não foi possivel cadastrar usuário');
@@ -86,7 +94,9 @@ class EmpresarioController extends Controller
      */
     public function show(Empresario $empresario)
     {
-        //
+        
+        $empresario = Empresario::where('id', $empresario)->get();
+        
     }
 
     /**
@@ -118,8 +128,15 @@ class EmpresarioController extends Controller
      * @param  \App\Models\Empresario  $empresario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empresario $empresario)
+    public function destroy($empresario)
     {
-        //
+        $empresario = Empresario::where('id', $empresario)->get()->first();
+        if($empresario){
+            $empresario->delete();
+            return back()->with('deleted', 'Registro deletado com sucesso');
+        }
+
+        return back()->with('deleted', 'Erro ao excluir registro, tente novamente!');
+        
     }
 }

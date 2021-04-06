@@ -21,3 +21,5 @@ use App\Http\Controllers\CidadeController;
 
 Route::resource('/', EmpresarioController::class);
 Route::get('/cidades/{id}', [CidadeController::class, 'cidades']);
+Route::get('/{id}', [EmpresarioController::class, 'show']);
+Route::post('/excluir/{id}', [EmpresarioController::class, 'destroy'])->name('excluir');
